@@ -1,13 +1,30 @@
 resource "aws_instance" "webserver-1" {
-  ami               = "ami-09d3b3274b6c5d4aa"
-  instance_type     = "t2.micro"
-  availability_zone = "us-east-1a"
+  ami               = var.ami
+  instance_type     = var.instance_type
+  availability_zone = var.region
+  key_name          = var.key_name
   vpc_security_group_ids = [aws_security_group.web-sg.id]
   subnet_id         = aws_subnet.web-sub-1.id
   #user_data         = file("install_apache.sh")
   tags              = {
     Name            = "Web-server"
   }
+}
+
+resource "aws_ebs_volume" "myvol" {
+  availability_zone = aws_instance.webserver-1.availability_zone
+  size              = 1
+
+  tags = {
+    Name            = "Os-Voulme"
+  }
+}
+
+resource "aws_volume_attachment" "ec_volume" {
+  device_name = "/dev/sdh"
+  instance_id = aws_instance.webserver-1.id
+  volume_id = aws_ebs_volume.myvol.id
+  force_detach = true
 }
 
 resource "aws_vpc" "web-app-vpc" {
