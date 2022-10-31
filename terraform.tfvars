@@ -1,1 +1,1 @@
-Machine_Name : Sonarqube
+Machine_Name = "Sonarqube"
