@@ -59,28 +59,25 @@ resource "aws_security_group" "web-sg" {
   name            = "Web-SG"
   description     = "Allow HTTP inbound traffic"
   vpc_id          = aws_vpc.web-app-vpc.id
-
-  ingress         = [
-    {
+  ingress {
       from_port   = 80
       protocol    = "tcp"
       to_port     = 80
       cidr_blocks = ["0.0.0.0/0"]
-      },
-    {
+      }
+  ingress {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
+    }
+  ingress {
       description      = "HTTPS from VPC"
       from_port        = 443
       to_port          = 443
       protocol         = "tcp"
       cidr_blocks      = ["0.0.0.0/0"]
     }
-    ]
   egress {
     from_port     = 0
     protocol      = "-1"
