@@ -45,6 +45,28 @@ resource "aws_subnet" "web-sub-1" {
   }
 }
 
+resource "aws_route_table" "route-1" {
+  vpc_id = aws_vpc.web-app-vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.web-IGW.id
+  }
+}
+resource "aws_route_table_association" "web-route-assoc-1" {
+  route_table_id = aws_route_table.route-1.id
+  subnet_id = aws_subnet.web-sub-1.id
+}
+resource "aws_route_table_association" "web-route-assoc-2" {
+  route_table_id = aws_route_table.route-1.id
+  subnet_id = aws_subnet.web-sub-2.id
+}
+
+resource "aws_internet_gateway" "web-IGW" {
+  vpc_id = aws_vpc.web-app-vpc.id
+  tags = {
+    Name = "web-IGW"
+  }
+}
 resource "aws_subnet" "web-sub-2" {
   cidr_block        = "10.0.2.0/24"
   vpc_id            = aws_vpc.web-app-vpc.id
