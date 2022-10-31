@@ -40,7 +40,7 @@ resource "aws_subnet" "web-sub-1" {
   availability_zone = "us-east-1a"
   map_public_ip_on_launch = true
   tags              = {
-    Name            = "web-app-sub"
+    Name            = "web-app-sub-1"
   }
 }
 
@@ -50,7 +50,7 @@ resource "aws_subnet" "web-sub-2" {
   availability_zone = "us-east-1b"
   map_public_ip_on_launch = true
   tags              = {
-    Name            = "web-app-sub"
+    Name            = "web-app-sub-2"
   }
 }
 
@@ -59,13 +59,27 @@ resource "aws_security_group" "web-sg" {
   description     = "Allow HTTP inbound traffic"
   vpc_id          = aws_vpc.web-app-vpc.id
 
-  ingress {
-    from_port     = 80
-    protocol      = "tcp"
-    to_port       = 80
-    cidr_blocks   = ["0.0.0.0/0"]
-  }
-
+  ingress         = [
+    {
+      from_port   = 80
+      protocol    = "tcp"
+      to_port     = 80
+      cidr_blocks = ["0.0.0.0/0"]
+  },
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    },
+    {
+      description      = "HTTPS from VPC"
+      from_port        = 443
+      to_port          = 443
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]
+    }
+]
   egress {
     from_port     = 0
     protocol      = "-1"
