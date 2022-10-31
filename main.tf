@@ -5,6 +5,7 @@ resource "aws_instance" "webserver-1" {
   key_name          = var.key_name
   vpc_security_group_ids = [aws_security_group.web-sg.id]
   subnet_id         = aws_subnet.web-sub-1.id
+  iam_instance_profile = "sanbox_access"
   #user_data         = file("install_apache.sh")
   tags              = {
     Name            = "Web-server"
