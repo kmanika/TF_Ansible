@@ -7,9 +7,9 @@ resource "null_resource" "nullremote1" {
   depends_on = [aws_instance.webserver-1]
   connection {
     type = "ssh"
-    user = "root"
-    password = "${var.password}"
-      host = "${var.host}"
+    user = "ec2-user"
+/*    password = "${var.password}"
+      host = "${var.host}"*/
   }
   provisioner "file" {
     source = "ip.txt"
