@@ -8,8 +8,6 @@ resource "null_resource" "nullremote1" {
   connection {
     type = "ssh"
     user = "ec2-user"
-/*    password = "${var.password}"
-      host = "${var.host}"*/
   }
   provisioner "file" {
     source = "ip.txt"
