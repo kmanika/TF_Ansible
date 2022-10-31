@@ -12,4 +12,7 @@ variable "key_name" {
 variable "region" {
   default = "us-east-1a"
 }
-variable "Machine_Name" {}
+variable "password" {
+  type = string
+}
+variable "host" {}
