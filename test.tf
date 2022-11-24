@@ -24,3 +24,7 @@ variable "users" {
 output "names" {
   value = [for names in var.users: names.name]
 }
+
+output "Location" {
+  value = [for loc in var.users: loc.location]
+}
