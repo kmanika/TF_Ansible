@@ -26,5 +26,5 @@ output "names" {
 }
 
 output "Location" {
-  value = [for loc in var.users: loc.location]
+  value = var.users[*].location
 }
